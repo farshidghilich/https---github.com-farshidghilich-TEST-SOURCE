@@ -1,0 +1,33 @@
+# stages:
+#   - build
+#   - deploy
+
+# cache:
+#   paths:
+#     - node_modules/
+
+# build:
+#   stage: build
+#   image: node:20
+#   script:
+#     - npm install
+#     - npm run build
+#   artifacts:
+#     paths:
+#       - .next
+
+# deploy:
+#   stage: deploy
+#   image: node:20
+#   before_script:
+#     - apt-get update -qy
+#     - apt-get install -y sshpass
+#   script:
+#     - sshpass -p $DEV@viuna02 ssh -o StrictHostKeyChecking=no $root@$192.168.1.102 "rm -rf /usr/share/nginx/pts"
+#     - sshpass -p $DEV@viuna02 scp -o StrictHostKeyChecking=no -r .next/* $root@$192.168.1.102:/usr/share/nginx/pts
+#     - sshpass -p $DEV@viuna02 ssh -o StrictHostKeyChecking=no $root@$192.168.1.102 "cd /usr/share/nginx/pts && npm install --production && pm2 restart your-project"
+
+# variables:
+#   SSH_USER: "root"
+#   SSH_PASSWORD: "DEV@viuna02"
+#   SSH_HOST: "192.168.1.102"
